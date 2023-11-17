@@ -16,6 +16,7 @@ runs:
   using: "composite"
   steps:
   - name: Checkout a repo With SSH
+    shell: bash
     env:
       ACTION_KEY: ${{ inputs.git_private_key }}
     run: |
