@@ -8,13 +8,16 @@ inputs:
   repo_name:
     description: "The Name of repo"
     required: true
+  git_private_key:
+    description: "The Private Key of Git"
+    required: true
 
 runs:
   using: "composite"
   steps:
       - name: Checkout a repo With SSH
         env:
-          ACTION_KEY: ${{ secrets.ACTION_KEY }}
+          ACTION_KEY: ${{ inputs.git_private_key }}
         run: |
           mkdir -p ~/.ssh/
           echo "$ACTION_KEY" > ~/.ssh/id_rsa
