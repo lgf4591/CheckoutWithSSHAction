@@ -13,11 +13,9 @@ inputs:
     required: true
   shell: 
     description: "Define the shell to run command. Default: bash"
-    required: true
     default: 'bash'
   branch: 
     description: "Define the branch to update. Default: main"
-    required: true
     default: 'main'
 
 runs:
