@@ -11,12 +11,20 @@ inputs:
   git_private_key:
     description: "The Private Key of Git"
     required: true
+  shell: 
+    description: "Define the shell to run command. Default: bash"
+    required: true
+    default: 'bash'
+  branch: 
+    description: "Define the branch to update. Default: main"
+    required: true
+    default: 'main'
 
 runs:
   using: "composite"
   steps:
   - name: Checkout a repo With SSH
-    shell: bash
+    shell: ${{ inputs.shell }}
     env:
       ACTION_KEY: ${{ inputs.git_private_key }}
     run: |
@@ -33,4 +41,5 @@ runs:
         git submodule init
         git submodule update --remote
       fi
+      git checkout ${{ inputs.branch }}
 
