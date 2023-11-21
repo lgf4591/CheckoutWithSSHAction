@@ -19,7 +19,7 @@ runs:
   using: "composite"
   steps:
   - name: Checkout a repo With SSH On Linux/Unix/MacOS
-    if: ${{ runner.os }} != "Windows"
+    if: runner.os != 'Windows'
     shell: ${{ inputs.shell }}
     env:
       ACTION_KEY: ${{ inputs.git_private_key }}
@@ -40,7 +40,7 @@ runs:
       git checkout ${{ inputs.branch }}
 
   - name: Checkout a repo With SSH On Windows
-    if: ${{ runner.os }} == "Windows"
+    if: runner.os == 'Windows'
     shell: ${{ inputs.shell }}
     env:
       ACTION_KEY: ${{ inputs.git_private_key }}
