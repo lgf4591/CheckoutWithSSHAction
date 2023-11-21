@@ -38,6 +38,7 @@ runs:
         git submodule update --remote
       fi
       git checkout ${{ inputs.branch }}
+      ls -lah
 
   - name: Checkout a repo With SSH On Windows
     if: runner.os == 'Windows'
@@ -46,4 +47,17 @@ runs:
       ACTION_KEY: ${{ inputs.git_private_key }}
     run: |
       Write-Output "$profile"
+      New-Item -Path $env:USERPROFILE\.ssh -ItemType Directory -Force -ErrorAction SilentlyContinue
+      Write-Output "$ACTION_KEY" > $env:USERPROFILE\.ssh\id_rsa
+      ssh-keyscan github.com >>  $env:USERPROFILE\.ssh\known_hosts
+      git config --global user.email "actions@github.com"
+      git config --global user.name "GitHub Action"
+      git clone git@github.com:${{ inputs.repo }}.git ./
+      if (Test-Path ".gitmodules" -PathType Leaf) {
+        Write-Host "update sub git repo"
+        git submodule init
+        git submodule update --remote
+      }
+      git checkout ${{ inputs.branch }}
+      Get-ChildItem .
 
